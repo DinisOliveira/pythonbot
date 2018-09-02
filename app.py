@@ -8,18 +8,6 @@ ACCESS_TOKEN = 'EAAKGgM6LgXoBADqhYTzq2VWkENwsghsErZBFzR1ovZAfu1SKdIVPxMSnMD2kxYg
 VERIFY_TOKEN = 'cheese'   #VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot (ACCESS_TOKEN)
 
-# Sentences we'll respond with if the user greeted us
-GREETING_KEYWORDS = ("hello", "hi", "greetings", "sup", "what's up",)
-
-GREETING_RESPONSES = ["'sup bro", "hey", "*nods*", "hey you get my snap?"]
-
-def check_for_greeting(sentence):
-    """If any of the words in the user's input was a greeting, return a greeting response"""
-    for word in sentence.words:
-        if word.lower() in GREETING_KEYWORDS:
-            return random.choice(GREETING_RESPONSES)
-
-
 #We will receive messages that Facebook sends our bot at this endpoint 
 @app.route("/", methods=['GET', 'POST'])
 def receive_message():
