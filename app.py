@@ -27,7 +27,7 @@ def receive_message():
                 #Facebook Messenger ID for user so we know where to send response back to
                 recipient_id = message['sender']['id']
                 if message['message'].get('text'):
-                    response_sent_text = get_message()
+                    response_sent_text = check_for_greeting(sentence)
                     send_message(recipient_id, response_sent_text)
                 #if user sends us a GIF, photo,video, or any other non-text item
                 if message['message'].get('attachments'):
@@ -47,7 +47,7 @@ def verify_fb_token(token_sent):
 GREETING_KEYWORDS = ("hello", "hi", "greetings", "sup", "what's up",)
 
 GREETING_RESPONSES = ["'sup bro", "hey", "*nods*", "hey you get my snap?"]
-def get_message()
+
     def check_for_greeting(sentence):
         """If any of the words in the user's input was a greeting, return a greeting response"""
         for word in sentence.words:
