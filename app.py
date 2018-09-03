@@ -9,31 +9,22 @@ VERIFY_TOKEN = 'cheese'   #VERIFY_TOKEN = os.environ['VERIFY_TOKEN']
 bot = Bot (ACCESS_TOKEN)
 
 #We will receive messages that Facebook sends our bot at this endpoint 
-@app.route("/", methods=['GET', 'POST'])
-def receive_message():
-    if request.method == 'GET':
-        """Before allowing people to message your bot, Facebook has implemented a verify token
-        that confirms all requests that your bot receives came from Facebook.""" 
-        token_sent = request.args.get("hub.verify_token")
-        return verify_fb_token(token_sent)
-    #if the request was not get, it must be POST and we can just proceed with sending a message back to user
-    else:
-        # get whatever message a user sent the bot
-       output = request.get_json()
-       for event in output['entry']:
-          messaging = event['messaging']
-          for message in messaging:
+@app.route(API_ROOT + FB_WEBHOOK, methods=["GET"])
+def fb_webhook():
+    verification_code = 'I_AM_VERIFICIATION_CODE'
+    verify_token = request.args.get('hub.verify_token')
+    if verification_code == verify_token:
+        return request.args.get('hub.challenge')
+
+
+@app.route(API_ROOT + FB_WEBHOOK, methods=['POST'])
+def fb_receive_message():
+    message_entries = json.loads(request.data.decode('utf8'))['entry']
+    for entry in message_entries:
+        for message in entry['messaging']:
             if message.get('message'):
-                #Facebook Messenger ID for user so we know where to send response back to
-                recipient_id = message['sender']['id']
-                if message['message'].get('text'):
-                    response_sent_text = check_for_greeting(sentence)
-                    send_message(recipient_id, response_sent_text)
-                #if user sends us a GIF, photo,video, or any other non-text item
-                if message['message'].get('attachments'):
-                    response_sent_nontext = check_for_greeting(sentence)
-                    send_message(recipient_id, response_sent_nontext)
-    return "Message Processed"
+                print("{sender[id]} says {message[text]}".format(**message))
+    return "Hi"
 
 
 def verify_fb_token(token_sent):
