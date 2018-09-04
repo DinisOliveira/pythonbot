@@ -4,6 +4,7 @@ import os, sys
 from flask import Flask, request
 from utils import wit_response
 from pymessenger import Bot
+import pytube
 
 
 app = Flask(__name__)
@@ -47,7 +48,10 @@ def webhook():
                         response = "Ok I will send you {} news".format(str(value))
                     elif entity == "location":
                         response = "Ok, So, you live in {0}. I will send you top headlines from {0}".format(str(value))
-
+                        link = "https://www.youtube.com/watch?v=LTXD6XZXc3U"
+                        yt = pytube.YouTube(link)
+                        stream = yt.streams.first()
+                        stream.download()
                     if response == None:
                         response = "Sorry I did not understand"
                     bot.send_text_message(sender_id, response)
