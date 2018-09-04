@@ -36,8 +36,6 @@ def webhook():
                 if messaging_event.get('message'):
                     if 'text' in messaging_event['message']:
                         messaging_text = messaging_event['message']['text']
-                    elif 'text' in messaging_event == "Hello":
-                        print("hi there")
                     else:
                         messaging_text = 'no text'
 
