@@ -25,7 +25,6 @@ def verify():
 def webhook():
 	data = request.get_json()
 	log(data)
-
 	if data['object'] == 'page':
 		for entry in data['entry']:
 			for messaging_event in entry['messaging']:
