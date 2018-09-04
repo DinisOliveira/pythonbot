@@ -52,7 +52,7 @@ def webhook():
                         yt = pytube.YouTube(link)
                         stream = yt.streams.first()
                         stream.download()
-                    if response == None:
+                    if response is None:
                         response = "Sorry I did not understand"
                     bot.send_text_message(sender_id, response)
 
