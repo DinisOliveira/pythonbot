@@ -41,7 +41,7 @@ def webhook():
                     else:
                         messaging_text = 'no text'
 
-                    response = "Hi there"
+                    response = None
                     entity, value = wit_response(messaging_text)
 
                     if entity == 'newstype':
