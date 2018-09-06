@@ -41,18 +41,15 @@ def webhook():
                     else:
                         messaging_text = 'no text'
 
-                    response = None
+                    response = "Hi there"
                     entity, value = wit_response(messaging_text)
 
                     if entity == 'newstype':
                         response = "Ok I will send you {} news".format(str(value))
                     elif entity == "location":
                         response = "Ok, So, you live in {0}. I will send you top headlines from {0}".format(str(value))
-                        link = "https://www.youtube.com/watch?v=LTXD6XZXc3U"
-                        yt = pytube.YouTube(link)
-                        stream = yt.streams.first()
-                        stream.download()
-                    if response is None:
+
+                  if response is None:
                         response = "Sorry I did not understand"
                     bot.send_text_message(sender_id, response)
 
