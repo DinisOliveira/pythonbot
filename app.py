@@ -1,6 +1,8 @@
 
-
+import random
 import os, sys
+from typing import List
+
 from flask import Flask, request
 from utils import wit_response
 from pymessenger import Bot
@@ -43,13 +45,16 @@ def webhook():
 
                     response = None
 
+                    greeting_responses = ["hi", "hello there", "hey", "ahoy"]
+
                     entity, value = wit_response(messaging_text)
                     if entity == 'newstype':
                         response = "Ok, I will send you the {} news".format(str(value))
                     elif entity == 'location':
                         response = "Ok, so you live in {0}. Here are top headlines from {0}".format(str(value))
                     elif entity == 'greetings':
-                        response = "Hey there how are you?"
+                        response = random.choice(greeting_responses)
+
 
                     if response == None:
                         response = "I have no idea what you are saying!"
