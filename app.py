@@ -4,8 +4,6 @@ import os, sys
 from flask import Flask, request
 from utils import wit_response
 from pymessenger import Bot
-import pytube
-
 
 app = Flask(__name__)
 
@@ -40,8 +38,8 @@ def webhook():
                         messaging_text = messaging_event['message']['text']
                     else:
                         messaging_text = 'no text'
-
                     response = None
+
                     entity, value = wit_response(messaging_text)
 
                     if entity == 'newstype':
